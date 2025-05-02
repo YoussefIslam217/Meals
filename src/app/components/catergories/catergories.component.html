@@ -1,0 +1,79 @@
+
+
+<div class="flex flex-col flex-1 overflow-y-auto bg-[#F4F2EE]">
+    
+
+
+
+
+    <div class="p-4 overflow-hidden sm:ml-64 min-h-screen ">
+        <div class="px-4">
+            <h1
+                class="text-4xl font-bold bg-gradient-to-r from-[#F29724] via-[#ca1023c4] to-[#c90519] bg-clip-text text-transparent capitalize">
+                learn, cook, eat your food</h1>
+        </div>
+
+        <div class="px-4 sm:hidden mt-8">
+            
+            <select id="nMeal" class="bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 capitalize"  [(ngModel)]="selectedTagName"
+            (change)="changeSelesctedTag($event)">
+
+                <option value="All" > all </option>
+                @for (catName of mealTagNames; track $index) {
+                    <option [value]="catName.strCategory">
+                    {{catName.strCategory}}
+                </option>
+                }
+
+            </select>
+        </div>
+
+   
+
+        <div class="px-4 hidden sm:block">
+            <ul class="sm:flex flex-wrap mt-8 font-medium text-center text-gray-500 border-gray-200 gap-4">
+                    <li
+                    [class.active-tag] ="selectedTagName == 'All'" (click)="showAllMeals()"
+                    class="px-4 py-2  border border-gray-400 transition-all hover:shadow-xl shadow duration-300 rounded-full hover:text-gray-600 hover:bg-gray-50  capitalize cursor-pointer ">
+                    <a>all</a>
+                </li>
+
+                        
+
+                @for (catName of mealTagNames; track $index) {
+                <li
+                    [class.active-tag] ="selectedTagName == catName.strCategory" (click)="showMealItems(catName.strCategory)"
+                    class="px-4 py-2  border border-gray-400 transition-all hover:shadow-xl shadow duration-300 rounded-full hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300 capitalize cursor-pointer ">
+                    <a >{{catName.strCategory}}</a>
+                </li>
+                }
+            </ul>
+        </div>
+
+        <div class=" px-4">
+            <div class="mt-24 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-20 ">
+                @for (item of mealss; track $index)  {
+                    <div class="meal group flex flex-col h-full hover:shadow-xl hover:scale-105 duration-300 transition-all bg-white p-6 rounded-[35px]">
+                        <div class="flex flex-col items-center">
+                            <img [src]="item.strMealThumb" class="w-full group-hover:rotate-[360deg] duration-700 transition-all rounded-full drop-shadow-xl -mt-16 shadow-2xl" alt="">
+                            <h3 class="font-semibold mt-4 tracking-wider text-xl text-center">{{item.strMeal}}</h3>
+                            @if (selectedTagName == 'All') {
+                                <h5 class="flex justify-center items-center gap-2 text-emerald-600">
+                                    <i class="fas fa-globe-asia"></i>
+                                    {{item.strArea}}
+                                </h5>
+                            }
+
+                        </div>
+                        <div class="mt-auto pt-4 flex justify-center"> 
+                            <button class="text-white bg-[#21BA75] bg-secondary hover:bg-emerald-600 font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 px-8 py-2 rounded-full">
+                                <a [routerLink]="['/meals-details',item.strMeal]" class="capitalize">view recipe</a>
+                            </button>
+                        </div>
+                    </div>
+                    }
+            </div>
+        </div>
+
+    </div>
+</div>
